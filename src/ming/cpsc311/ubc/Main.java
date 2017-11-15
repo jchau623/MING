@@ -9,6 +9,16 @@ import java.util.ArrayList;
 
 public class Main {
 
+
+    //error to handle: 
+    // 1. invalid function                                          TODO
+    // 2. invalid function format                                   TODO
+    // 3. invalid number of arguments, in make too                  TODO
+    // 4. multi function call on one line                           TODO
+    // 5. invalid argument types                                    TODO
+    // 6. uninstantiated variables                                  TODO
+    // 7. naming variables funciton names eg bond = make('C')       TODO
+
     public static void main(String[] args) throws FileNotFoundException {
 	    if (args.length != 1) {
 	        throw new IllegalArgumentException("Only one argument can be passed in, a MING file");
@@ -28,12 +38,11 @@ public class Main {
 
             while ((readLine = in.readLine()) != null) {
                 //parsing then adding to 
-                parsed.add(parser.parse(readLine));
+                parsed.add(parser.parse(readLine.trim()));
             }
 
             for (String line: parsed){
                 //writing to file
-                System.out.println(line);
                 writer.write(line);
                 writer.newLine();
             }
