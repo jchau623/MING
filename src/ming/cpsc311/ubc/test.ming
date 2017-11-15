@@ -1,0 +1,3 @@
+bond(c2, o, 0, 0, 1)
+bond(c1, c2, 1, 0, 2)
+render(c1)
