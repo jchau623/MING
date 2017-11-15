@@ -20,21 +20,26 @@ public class Main {
             BufferedReader in = new BufferedReader(new FileReader(args[0]));
             String readLine = "";
             //for writing to file
-            BufferedWriter writer = new BufferedWriter(new FileWriter("temp.java"));
-            //writer.write(str);
-            ArrayList parsed = new ArrayList<String>();
+            FileWriter fw = new FileWriter("tmp.java");
+            BufferedWriter writer = new BufferedWriter(fw);
+            ArrayList<String> parsed = new ArrayList<String>();
 
             InputParser parser = new InputParser();
 
             while ((readLine = in.readLine()) != null) {
+                //parsing then adding to 
                 parsed.add(parser.parse(readLine));
             }
 
             for (String line: parsed){
-                System.out.println(parsed);
-                writer.write(parsed);
+                //writing to file
+                System.out.println(line);
+                writer.write(line);
                 writer.newLine();
             }
+            writer.flush();
+            writer.close();
+            fw.close();
         } catch (IOException e){
             e.printStackTrace();
         }
