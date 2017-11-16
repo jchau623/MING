@@ -35,43 +35,23 @@ class InputParser {
                 case "bond":                String args[] = s.substring(s.indexOf("(")+1, s.indexOf(")")+1).split(",");
                                             String lastArg = args[args.length-1];
                                             args[args.length-1] = lastArg.substring(0, lastArg.length() -1);
+                                            Structure firstE = getVariable(args[0]);
+                                            Structure secondE = getVariable(args[1]);
+                                            int bondType = Integer.parseInt(sanitize(args[2]));
+                                            firstE.addBond(secondE, bondType);
+                                            secondE.addBond(firstE, bondType);
                                             switch(sanitize(args[args.length-1])){
                                                 //SECTION BELOW WILL BE RE WRITTEN THEYRE ALL THE SAME
                                                 //BUT WE OUT PUTTING TO A JAVA FILE TO SEE DESUGARING OUTPUT FOR NOW
                                                 case "1":   func = "single-bond(";
-                                                            Structure firstE = getVariable(args[0]);
-                                                            Structure secondE = getVariable(args[1]);
-                                                            int bondType = Integer.parseInt(sanitize(args[2]));
-                                                            firstE.addBond(secondE, bondType);
-                                                            secondE.addBond(firstE, bondType);
                                                             break;
                                                 case "2":   func = "double-bond(";
-                                                            Structure firstE = getVariable(args[0]);
-                                                            Structure secondE = getVariable(args[1]);
-                                                            int bondType = Integer.parseInt(sanitize(args[2]));
-                                                            firstE.addBond(secondE, bondType);
-                                                            secondE.addBond(firstE, bondType);
                                                             break;
                                                 case "3":   func = "triple-bond(";
-                                                            Structure firstE = getVariable(args[0]);
-                                                            Structure secondE = getVariable(args[1]);
-                                                            int bondType = Integer.parseInt(sanitize(args[2]));
-                                                            firstE.addBond(secondE, bondType);
-                                                            secondE.addBond(firstE, bondType);
                                                             break;
                                                 case "4":   func = "in-bond(";
-                                                            Structure firstE = getVariable(args[0]);
-                                                            Structure secondE = getVariable(args[1]);
-                                                            int bondType = Integer.parseInt(sanitize(args[2]));
-                                                            firstE.addBond(secondE, bondType);
-                                                            secondE.addBond(firstE, bondType);
                                                             break;
                                                 case "5":   func = "out-bond(";
-                                                            Structure firstE = getVariable(args[0]);
-                                                            Structure secondE = getVariable(args[1]);
-                                                            int bondType = Integer.parseInt(sanitize(args[2]));
-                                                            firstE.addBond(secondE, bondType);
-                                                            secondE.addBond(firstE, bondType);
                                                             break;
                                             }
                                             func = func + args[0] + "," + args[1] + "," + args[2] + ");" ;
