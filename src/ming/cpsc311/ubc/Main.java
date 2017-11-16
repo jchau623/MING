@@ -49,6 +49,15 @@ public class Main {
             writer.flush();
             writer.close();
             fw.close();
+
+            ArrayList<Structure> stuff = parser.getAll();
+
+            for(Structure x: stuff){
+                for(Bond y: x.getBonds()){
+                    System.out.println(y.getBondType());
+                    System.out.println(y.getStructure());
+                }
+            }
         } catch (IOException e){
             e.printStackTrace();
         }

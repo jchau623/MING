@@ -5,7 +5,7 @@ import java.util.ArrayList;
 class InputParser {
     //keep a list of all instantiated varialbes
     //error checking later in parseFunction will use this to see if a variable is instantiated statically
-    public ArrayList<String> variables = new ArrayList<String>();
+    public ArrayList<Structure> elements = new ArrayList<Structure>();
 
     public String parse(String s) {
         String func = "";
@@ -14,7 +14,8 @@ class InputParser {
             String[] parts = s.split("=");
             //adding to list of instantiated varaibles 
             String variableName = sanitize(parts[0]);
-            variables.add(variableName);
+            Structure struc = new Structure(variableName, parseFunction(sanitize(parts[1])));
+            elements.add(struc);
             func = "MING " + variableName + " = " + parseFunction(sanitize(parts[1]));
         } else {
             //not variable declaration, just function application
@@ -35,18 +36,45 @@ class InputParser {
                                             String lastArg = args[args.length-1];
                                             args[args.length-1] = lastArg.substring(0, lastArg.length() -1);
                                             switch(sanitize(args[args.length-1])){
+                                                //SECTION BELOW WILL BE RE WRITTEN THEYRE ALL THE SAME
+                                                //BUT WE OUT PUTTING TO A JAVA FILE TO SEE DESUGARING OUTPUT FOR NOW
                                                 case "1":   func = "single-bond(";
+                                                            Structure firstE = getVariable(args[0]);
+                                                            Structure secondE = getVariable(args[1]);
+                                                            int bondType = Integer.parseInt(sanitize(args[2]));
+                                                            firstE.addBond(secondE, bondType);
+                                                            secondE.addBond(firstE, bondType);
                                                             break;
                                                 case "2":   func = "double-bond(";
+                                                            Structure firstE = getVariable(args[0]);
+                                                            Structure secondE = getVariable(args[1]);
+                                                            int bondType = Integer.parseInt(sanitize(args[2]));
+                                                            firstE.addBond(secondE, bondType);
+                                                            secondE.addBond(firstE, bondType);
                                                             break;
                                                 case "3":   func = "triple-bond(";
+                                                            Structure firstE = getVariable(args[0]);
+                                                            Structure secondE = getVariable(args[1]);
+                                                            int bondType = Integer.parseInt(sanitize(args[2]));
+                                                            firstE.addBond(secondE, bondType);
+                                                            secondE.addBond(firstE, bondType);
                                                             break;
                                                 case "4":   func = "in-bond(";
+                                                            Structure firstE = getVariable(args[0]);
+                                                            Structure secondE = getVariable(args[1]);
+                                                            int bondType = Integer.parseInt(sanitize(args[2]));
+                                                            firstE.addBond(secondE, bondType);
+                                                            secondE.addBond(firstE, bondType);
                                                             break;
                                                 case "5":   func = "out-bond(";
+                                                            Structure firstE = getVariable(args[0]);
+                                                            Structure secondE = getVariable(args[1]);
+                                                            int bondType = Integer.parseInt(sanitize(args[2]));
+                                                            firstE.addBond(secondE, bondType);
+                                                            secondE.addBond(firstE, bondType);
                                                             break;
                                             }
-                                            func = func + args[0] + ", " + args[1] + ", " + args[2] + ", " + args[3] + ");" ;
+                                            func = func + args[0] + "," + args[1] + "," + args[2] + ");" ;
                                             break;
                 case "mirror":              func = s;
                                             break;
@@ -69,6 +97,22 @@ class InputParser {
     //get rids of spaces in a string
     public String sanitize(String s){
         return s.replaceAll("\\s+","");
+    }
+
+    public Structure getVariable(String vName){
+        String name = sanitize(vName);
+        for(Structure s: elements){
+            if(s.getVname().equals(name)){
+                return s;
+            }
+        }
+        //to do throw undefined variable error
+        return null;
+    }
+
+    //for testing purposes only
+    public ArrayList<Structure> getAll(){
+        return this.elements;
     }
 }
 
