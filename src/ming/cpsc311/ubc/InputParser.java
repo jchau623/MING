@@ -41,8 +41,6 @@ class InputParser {
                                             firstE.addBond(secondE, bondType);
                                             secondE.addBond(firstE, bondType);
                                             switch(sanitize(args[args.length-1])){
-                                                //SECTION BELOW WILL BE RE WRITTEN THEYRE ALL THE SAME
-                                                //BUT WE OUT PUTTING TO A JAVA FILE TO SEE DESUGARING OUTPUT FOR NOW
                                                 case "1":   func = "single-bond(";
                                                             break;
                                                 case "2":   func = "double-bond(";
