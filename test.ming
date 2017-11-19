@@ -1,0 +1,7 @@
+c1 = make(C)
+c2 = make(C)
+double-bond(c1, c2)
+single-bond(c1, c2)
+triple-bond(c1, c2)
+in-bond(c1, c2)
+out-bond(c1, c2)

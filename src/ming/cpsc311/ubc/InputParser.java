@@ -1,3 +1,6 @@
+import Exceptions.InvalidFunctionException;
+import com.sun.javaws.exceptions.InvalidArgumentException;
+
 import java.util.Scanner;
 import java.util.Arrays;
 import java.util.ArrayList;
@@ -5,11 +8,11 @@ import java.util.ArrayList;
 class InputParser {
     //keep a list of all instantiated varialbes
     //error checking later in parseFunction will use this to see if a variable is instantiated statically
-    public ArrayList<Structure> elements = new ArrayList<Structure>();
+    private ArrayList<Structure> elements = new ArrayList<>();
 
-    public String parse(String s) {
-        String func = "";
-        if(s.indexOf("=") > -1){
+    String parse(String s) throws InvalidFunctionException {
+        String func;
+        if(s.contains("=")){
             //variable declaration
             String[] parts = s.split("=");
             //adding to list of instantiated varaibles 
@@ -24,56 +27,62 @@ class InputParser {
         return func;
     }
 
-    public String parseFunction(String s){
-        String func = "";
-        String functionName = s.split("\\(")[0];
-            switch(functionName){
-                case "make-ring":           func = s;
-                                            break;
-                case "make-chain":          func = s;
-                                            break;
-                case "bond":                String args[] = s.substring(s.indexOf("(")+1, s.indexOf(")")+1).split(",");
-                                            String lastArg = args[args.length-1];
-                                            args[args.length-1] = lastArg.substring(0, lastArg.length() -1);
-                                            Structure firstE = getVariable(args[0]);
-                                            Structure secondE = getVariable(args[1]);
-                                            int bondType = Integer.parseInt(sanitize(args[2]));
-                                            firstE.addBond(secondE, bondType);
-                                            secondE.addBond(firstE, bondType);
-                                            switch(sanitize(args[args.length-1])){
-                                                case "1":   func = "single-bond(";
-                                                            break;
-                                                case "2":   func = "double-bond(";
-                                                            break;
-                                                case "3":   func = "triple-bond(";
-                                                            break;
-                                                case "4":   func = "in-bond(";
-                                                            break;
-                                                case "5":   func = "out-bond(";
-                                                            break;
-                                            }
-                                            func = func + args[0] + "," + args[1] + "," + args[2] + ");" ;
-                                            break;
-                case "mirror":              func = s;
-                                            break;
-                case "conver-to-smiles":    func = s;
-                                            break;
-                case "check-validity":      func = s;
-                                            break;
-                case "render":              func = s;
-                                            break;
-                case "make":                func = "make(" + s.substring(s.indexOf("(") + 1, s.indexOf(")")) + ")";
-                                            break;
-                //error because what is being use isn't in our language
-                default:                    func = "ERROR";
-                                            break;
-            }
+    private String parseFunction(String s) throws InvalidFunctionException {
+        String func;
+        String[] function = s.split("\\(");
+        if(function.length != 2) throw new InvalidFunctionException("Invalid function form");
+        String functionName = function[0];
+        String[] args  = function[1].split("\\)");
+        if (args.length != 1 && args[0].equals(function[1])) throw new InvalidFunctionException("Invalid function form");
+        args = Arrays.stream(args[0].split(",")).map(String::trim).toArray(String[]::new); //trims whitespace
+
+        switch(functionName){
+            case "make-ring":           func = s;
+                                        break;
+            // Making a linear molecular chain structure
+            case "make-chain":          func = s;
+                                        break;
+            case "single-bond":         if (args.length != 2) throw new InvalidFunctionException("single-bond requires 2 arguments, " +
+                                        "given " + args.length);
+                                        func = "bond(" + args[0] + ", " + args[1] + ", 1);";
+                                        break;
+            case "double-bond":         if (args.length != 2) throw new InvalidFunctionException("double-bond requires 2 arguments, " +
+                                        "given " + args.length);
+                                        func = "bond(" + args[0] + ", " + args[1] + ", 2);";
+                                        break;
+            case "triple-bond":         if (args.length != 2) throw new InvalidFunctionException("triple-bond requires 2 arguments, " +
+                                        "given " + args.length);
+                                        func = "bond(" + args[0] + ", " + args[1] + ", 3);";
+                                        break;
+            case "in-bond":             if (args.length != 2) throw new InvalidFunctionException("in-bond requires 2 arguments, " +
+                                        "given " + args.length);
+                                        func = "bond(" + args[0] + ", " + args[1] + ", 4);";
+                                        break;
+            case "out-bond":            if (args.length != 2) throw new InvalidFunctionException("out-bond requires 2 arguments, " +
+                                        "given " + args.length);
+                                        func = "bond(" + args[0] + ", " + args[1] + ", 5);";
+                                        break;
+            case "mirror":              func = s;
+                                        break;
+            case "conver-to-smiles":    func = s;
+                                        break;
+            case "check-validity":      func = s;
+                                        break;
+            case "render":              func = s;
+                                        break;
+            // Making a single-element molecular structure
+            case "make":                func = "make(" + s.substring(s.indexOf("(") + 1, s.indexOf(")")) + ")";
+                                        break;
+            //error because what is being use isn't in our language
+            default:                    func = "ERROR"; //TODO: should throw exception? or ignore "ERROR"
+                                        break;
+        }
         return func;
     }
 
 
     //get rids of spaces in a string
-    public String sanitize(String s){
+    private String sanitize(String s){
         return s.replaceAll("\\s+","");
     }
 
@@ -89,7 +98,7 @@ class InputParser {
     }
 
     //for testing purposes only
-    public ArrayList<Structure> getAll(){
+    ArrayList<Structure> getAll(){
         return this.elements;
     }
 }

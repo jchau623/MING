@@ -1,3 +1,0 @@
-c1 = make(C)
-c2 = make(C)
-bond(c1, c2, 1)

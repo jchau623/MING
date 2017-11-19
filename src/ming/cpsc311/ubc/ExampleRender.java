@@ -14,7 +14,7 @@ import java.awt.geom.Line2D;
 
 import javax.imageio.ImageIO;
 
-public class WriteImageType {
+class WriteImageType {
   static public void main(String args[]) throws Exception {
     try {
       int width = 200, height = 200;

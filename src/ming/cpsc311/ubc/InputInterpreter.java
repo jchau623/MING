@@ -1,5 +1,3 @@
-package ming.cpsc311.ubc;
-
 public class InputInterpreter implements InputInterpreterInterface{
 
     /**

@@ -1,3 +1,5 @@
+import Exceptions.InvalidFunctionException;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -19,7 +21,7 @@ public class Main {
     // 6. uninstantiated variables                                  TODO
     // 7. naming variables funciton names eg bond = make('C')       TODO
 
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) throws FileNotFoundException, InvalidFunctionException {
 	    if (args.length != 1) {
 	        throw new IllegalArgumentException("Only one argument can be passed in, a MING file");
         }
@@ -28,11 +30,12 @@ public class Main {
             //changed this because before input would be split on commas
             //buffered reader reads on each line, doesnt split on comma
             BufferedReader in = new BufferedReader(new FileReader(args[0]));
-            String readLine = "";
+            String readLine;
             //for writing to file
+            // what do we save this into a file for?
             FileWriter fw = new FileWriter("tmp.java");
             BufferedWriter writer = new BufferedWriter(fw);
-            ArrayList<String> parsed = new ArrayList<String>();
+            ArrayList<String> parsed = new ArrayList<>();
 
             InputParser parser = new InputParser();
 
