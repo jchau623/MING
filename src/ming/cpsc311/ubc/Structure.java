@@ -4,14 +4,14 @@ import java.util.ArrayList;
 
 class Structure {
 
-    public String eName;
-    public String vName;
-    public ArrayList<Bond> bonds;
+    private String eName; //element name
+    private String vName; //variable name
+    private ArrayList<Bond> bonds;
 
     Structure(String vname, String ename){
         this.vName = vname;
         this.eName = ename;
-        this.bonds = new ArrayList<Bond>();
+        this.bonds = new ArrayList<>();
     }
 
     public ArrayList<Bond> getBonds(){
@@ -22,7 +22,7 @@ class Structure {
         bonds.add(new Bond(el, bondType));
     }
 
-    public String getVname(){
+    public String getvName(){
         return this.vName;
     }
 
