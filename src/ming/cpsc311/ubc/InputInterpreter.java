@@ -3,10 +3,12 @@ public class InputInterpreter implements InputInterpreterInterface{
     /**
      * Creates a Structure from one element
      *
-     * @param s String of element to be created
+     * @param vName String of variable element is assigned to
+     * @param eName String of element to be created
      * @return Structure
      */
-    public Structure make(String s) {
+    public Structure make(String vName, String eName) {
+
         return null;
     }
 

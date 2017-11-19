@@ -1,24 +1,24 @@
 import Exceptions.InvalidFunctionException;
-import com.sun.javaws.exceptions.InvalidArgumentException;
 
-import java.util.Scanner;
 import java.util.Arrays;
 import java.util.ArrayList;
 
 class InputParser {
     //keep a list of all instantiated varialbes
     //error checking later in parseFunction will use this to see if a variable is instantiated statically
-    private ArrayList<Structure> elements = new ArrayList<>();
+
+    // private ArrayList<Structure> elements = new ArrayList<>();
 
     String parse(String s) throws InvalidFunctionException {
         String func;
+        InputInterpreterInterface interpreter = new InputInterpreter();
         if(s.contains("=")){
             //variable declaration
             String[] parts = s.split("=");
-            //adding to list of instantiated varaibles 
+            //adding to list of instantiated variables
             String variableName = sanitize(parts[0]);
-            Structure struc = new Structure(variableName, parseFunction(sanitize(parts[1])));
-            elements.add(struc);
+            //Structure struc = new Structure(variableName, parseFunction(sanitize(parts[1])));
+            //elements.add(struc);
             func = "MING " + variableName + " = " + parseFunction(sanitize(parts[1]));
         } else {
             //not variable declaration, just function application
@@ -34,7 +34,7 @@ class InputParser {
         String functionName = function[0];
         String[] args  = function[1].split("\\)");
         if (args.length != 1 && args[0].equals(function[1])) throw new InvalidFunctionException("Invalid function form");
-        args = Arrays.stream(args[0].split(",")).map(String::trim).toArray(String[]::new); //trims whitespace
+        args = Arrays.stream(args[0].split(",")).map(InputParser::sanitize).toArray(String[]::new); //trims whitespace
 
         switch(functionName){
             case "make-ring":           func = s;
@@ -82,24 +82,28 @@ class InputParser {
 
 
     //get rids of spaces in a string
-    private String sanitize(String s){
+    private static String sanitize(String s){
         return s.replaceAll("\\s+","");
     }
 
+    /*
     public Structure getVariable(String vName){
         String name = sanitize(vName);
         for(Structure s: elements){
-            if(s.getVname().equals(name)){
+            if(s.getvName().equals(name)){
                 return s;
             }
         }
         //to do throw undefined variable error
         return null;
     }
+    */
 
     //for testing purposes only
+    /*
     ArrayList<Structure> getAll(){
         return this.elements;
     }
+    */
 }
 
