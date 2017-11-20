@@ -1,3 +1,5 @@
+package ming.cpsc311.ubc;
+
 import Exceptions.InvalidFunctionException;
 
 import java.util.Arrays;

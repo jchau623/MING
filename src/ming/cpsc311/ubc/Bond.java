@@ -1,10 +1,12 @@
+package ming.cpsc311.ubc;
+
 import java.util.Arrays;
 import java.util.ArrayList;
 
 class Bond{
 
-  public Structure structure;
-  public int bondType;
+  private Structure structure;
+  private int bondType;
 
   Bond(Structure structure, int bondType){
     this.structure = structure;

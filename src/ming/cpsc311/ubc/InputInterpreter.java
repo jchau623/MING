@@ -1,11 +1,14 @@
+package ming.cpsc311.ubc;
+
 import Exceptions.InvalidFunctionException;
+import ming.cpsc311.ubc.InputInterpreterInterface;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class InputInterpreter implements InputInterpreterInterface{
+public class InputInterpreter implements InputInterpreterInterface {
     HashMap<String, Structure> structures = new HashMap<>();
 
     @Override

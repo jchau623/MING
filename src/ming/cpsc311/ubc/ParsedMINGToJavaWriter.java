@@ -1,3 +1,5 @@
+package ming.cpsc311.ubc;
+
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
