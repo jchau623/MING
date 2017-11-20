@@ -50,7 +50,11 @@ public class Main {
         // "reflection" - https://stackoverflow.com/questions/160970/how-do-i-invoke-a-java-method-when-given-the-method-name-as-a-string
         interpreter.interpret(parsed);
 
+        // testing out the 2d api
+        String [] s = new String[0];
+        WriteImageType.main(s);
 
+        // todo: delete
         /*
         ArrayList<Structure> stuff = parser.getAll();
 

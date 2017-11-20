@@ -1,3 +1,5 @@
+package ming.cpsc311.ubc;
+
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
@@ -15,7 +17,7 @@ import java.awt.geom.Line2D;
 import javax.imageio.ImageIO;
 
 class WriteImageType {
-  static public void main(String args[]) throws Exception {
+  static public void main(String args[]) throws IOException {
     try {
       int width = 200, height = 200;
 

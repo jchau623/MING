@@ -58,6 +58,7 @@ public class InputInterpreter implements InputInterpreterInterface {
      * @param b_string TODO
      * @return Structure
      */
+    //TODO: Problem - how do you bond a certain carbon in the ring to another structure without any indexes?
     private Structure make_ring(String vName, String n_string, String b_string) {
         int n = Integer.parseInt(n_string);
         Boolean b = Boolean.valueOf(b_string); // TODO: this boolean option is for showing/hiding the letter C over Carbons (false = hide)
@@ -141,11 +142,14 @@ public class InputInterpreter implements InputInterpreterInterface {
     /**
      * Renders the structure given
      *
+     * The angle of the line formed by the bond is (# of bonds)/360.
+     *
      * @param s Structure to be rendered
      */
     //TODO: Look into hashmap for the corresponding Structure!
-    private void render(String s) {
-
+    private void render(String s) throws StructureNotFoundException {
+        Structure x = this.structures.get(s);
+        if (x == null) throw new StructureNotFoundException("Structure " + s + " does not exist.");
     }
 
     private Method obtainMethod(String function) throws NoSuchMethodException {
