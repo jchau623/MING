@@ -44,7 +44,7 @@ class InputParser {
                                         func = "make_ring(" + (this.variableName != null ? this.variableName + "," : "") + s.substring(s.indexOf("(") + 1, s.indexOf(")")) + ");";
                                         break;
             // Making a linear molecular chain structure
-            case "make-chain":          if (args.length != 1) throw new InvalidFunctionException("make-chain requires 1 argument, given " + args.length);
+            case "make-chain":          if (args.length != 2) throw new InvalidFunctionException("make-chain requires 2 argument, given " + args.length);
                                         func = "make_chain(" + (this.variableName != null ? this.variableName + "," : "") + s.substring(s.indexOf("(") + 1, s.indexOf(")")) + ");";
                                         break;
             case "single-bond":         if (args.length != 2) throw new InvalidFunctionException("single-bond requires 2 arguments, " +

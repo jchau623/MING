@@ -1,6 +1,7 @@
 package ming.cpsc311.ubc;
 
 import Exceptions.InvalidFunctionException;
+import Exceptions.StructureNotFoundException;
 import ming.cpsc311.ubc.InputInterpreterInterface;
 
 import java.lang.reflect.InvocationTargetException;
@@ -9,7 +10,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class InputInterpreter implements InputInterpreterInterface {
-    HashMap<String, Structure> structures = new HashMap<>();
+    private HashMap<String, Structure> structures = new HashMap<>();
 
     @Override
     public void interpret(ArrayList<String> commands) throws NoSuchMethodException, InvalidFunctionException {
@@ -44,9 +45,10 @@ public class InputInterpreter implements InputInterpreterInterface {
      * @param eName String of element to be created
      * @return Structure
      */
-    public Structure make(String vName, String eName) {
-
-        return null;
+    private Structure make(String vName, String eName) {
+        Structure s = new Structure(vName, eName);
+        this.structures.put(vName, s);
+        return s;
     }
 
     /**
@@ -56,19 +58,30 @@ public class InputInterpreter implements InputInterpreterInterface {
      * @param b_string TODO
      * @return Structure
      */
-    public Structure make_ring(String vName, String n_string, String b_string) {
+    private Structure make_ring(String vName, String n_string, String b_string) {
         int n = Integer.parseInt(n_string);
-        Boolean b = Boolean.valueOf(b_string);
+        Boolean b = Boolean.valueOf(b_string); // TODO: this boolean option is for showing/hiding the letter C over Carbons (false = hide)
+        /*
+            Make n Carbons and bond the Carbons together into a ring
+         */
+        for (int i = 0; i < n; i++) {
+
+        }
         return null;
     }
 
     /**
      * Creates a chain of elements
      * @param vName String of variable chain is assigned to
+     * @param n_string Number of elements in this chain
      * @param s Element used to create the chain
      * @return Structure
      */
-    public Structure make_chain(String vName, String s) {
+    private Structure make_chain(String vName, String n_string, String s) {
+        int n = Integer.parseInt(n_string);
+        for (int i = 0; i < n; i++) {
+
+        }
         return null;
     }
 
@@ -81,9 +94,15 @@ public class InputInterpreter implements InputInterpreterInterface {
      * @return Structure
      */
     //TODO: Look into hashmap for the corresponding Structure!
-    public Structure join(String s1, String s2, String bond_type_string) {
+    private Structure join(String s1, String s2, String bond_type_string) throws StructureNotFoundException {
         int bond_type = Integer.parseInt(bond_type_string);
-        return null;
+        Structure x = this.structures.get(s1);
+        Structure y = this.structures.get(s2);
+        if (x == null) throw new StructureNotFoundException("Structure " + s1 + " does not exist.");
+        if (y == null) throw new StructureNotFoundException("Structure " + s2 + " does not exist.");
+        x.addBond(y, bond_type);
+        y.addBond(x, bond_type);
+        return x;
     }
 
     /**
@@ -93,7 +112,7 @@ public class InputInterpreter implements InputInterpreterInterface {
      * @return Structure
      */
     //TODO: Look into hashmap for the corresponding Structure!
-    public Structure mirror(String s) {
+    private Structure mirror(String s) {
         return null;
     }
 
@@ -104,7 +123,7 @@ public class InputInterpreter implements InputInterpreterInterface {
      * @return String
      */
     //TODO: Look into hashmap for the corresponding Structure!
-    public String toSmiles(String s) {
+    private String toSmiles(String s) {
         return null;
     }
 
@@ -115,7 +134,7 @@ public class InputInterpreter implements InputInterpreterInterface {
      * @return boolean
      */
     //TODO: Look into hashmap for the corresponding Structure!
-    public boolean checkValidity(String s) {
+    private boolean checkValidity(String s) {
         return false;
     }
 
@@ -125,7 +144,7 @@ public class InputInterpreter implements InputInterpreterInterface {
      * @param s Structure to be rendered
      */
     //TODO: Look into hashmap for the corresponding Structure!
-    public void render(String s) {
+    private void render(String s) {
 
     }
 
@@ -134,28 +153,28 @@ public class InputInterpreter implements InputInterpreterInterface {
         try {
             switch (function) {
                 case "make":
-                    currentMethod = InputInterpreter.class.getMethod(function, String.class, String.class);
+                    currentMethod = InputInterpreter.class.getDeclaredMethod(function, String.class, String.class);
                     break;
                 case "make_ring":
-                    currentMethod = InputInterpreter.class.getMethod(function, String.class, String.class, String.class);
+                    currentMethod = InputInterpreter.class.getDeclaredMethod(function, String.class, String.class, String.class);
                     break;
                 case "make_chain":
-                    currentMethod = InputInterpreter.class.getMethod(function, String.class, String.class);
+                    currentMethod = InputInterpreter.class.getDeclaredMethod(function, String.class, String.class, String.class);
                     break;
                 case "join":
-                    currentMethod = InputInterpreter.class.getMethod(function, String.class, String.class, String.class);
+                    currentMethod = InputInterpreter.class.getDeclaredMethod(function, String.class, String.class, String.class);
                     break;
                 case "mirror":
-                    currentMethod = InputInterpreter.class.getMethod(function, String.class);
+                    currentMethod = InputInterpreter.class.getDeclaredMethod(function, String.class);
                     break;
                 case "toSmiles":
-                    currentMethod = InputInterpreter.class.getMethod(function, String.class);
+                    currentMethod = InputInterpreter.class.getDeclaredMethod(function, String.class);
                     break;
                 case "checkValidity":
-                    currentMethod = InputInterpreter.class.getMethod(function, String.class);
+                    currentMethod = InputInterpreter.class.getDeclaredMethod(function, String.class);
                     break;
                 case "render":
-                    currentMethod = InputInterpreter.class.getMethod(function, String.class);
+                    currentMethod = InputInterpreter.class.getDeclaredMethod(function, String.class);
                     break;
                 default:
                     throw new NoSuchMethodException(function + " does not exist");

@@ -1,4 +1,4 @@
 c1 = make(C)
 c2 = make(C)
 c3 = make-ring(6, f)
-c4 = make-chain(D)
+c4 = make-chain(5, D)

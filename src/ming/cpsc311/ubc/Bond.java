@@ -4,7 +4,6 @@ import java.util.Arrays;
 import java.util.ArrayList;
 
 class Bond{
-
   private Structure structure;
   private int bondType;
 
