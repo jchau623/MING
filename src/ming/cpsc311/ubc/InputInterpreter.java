@@ -150,6 +150,7 @@ public class InputInterpreter implements InputInterpreterInterface {
     private void render(String s) throws StructureNotFoundException {
         Structure x = this.structures.get(s);
         if (x == null) throw new StructureNotFoundException("Structure " + s + " does not exist.");
+
     }
 
     private Method obtainMethod(String function) throws NoSuchMethodException {
