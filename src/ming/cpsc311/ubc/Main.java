@@ -52,7 +52,7 @@ public class Main {
 
         // testing out the 2d api
         String [] s = new String[0];
-        WriteImageType.main(s);
+        //WriteImageType.main(s);
 
         // todo: delete
         /*

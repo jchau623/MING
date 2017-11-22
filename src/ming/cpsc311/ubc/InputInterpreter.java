@@ -149,6 +149,7 @@ public class InputInterpreter implements InputInterpreterInterface {
     //TODO: Look into hashmap for the corresponding Structure!
     private void render(String s) throws StructureNotFoundException {
         Structure x = this.structures.get(s);
+        System.out.println("hello bitch");
         if (x == null) throw new StructureNotFoundException("Structure " + s + " does not exist.");
 
     }
@@ -157,6 +158,9 @@ public class InputInterpreter implements InputInterpreterInterface {
         Method currentMethod;
         try {
             switch (function) {
+                case "bond":
+                    currentMethod = InputInterpreter.class.getDeclaredMethod(function, String.class, String.class, String.class);
+                    break;
                 case "make":
                     currentMethod = InputInterpreter.class.getDeclaredMethod(function, String.class, String.class);
                     break;
@@ -164,9 +168,6 @@ public class InputInterpreter implements InputInterpreterInterface {
                     currentMethod = InputInterpreter.class.getDeclaredMethod(function, String.class, String.class, String.class);
                     break;
                 case "make_chain":
-                    currentMethod = InputInterpreter.class.getDeclaredMethod(function, String.class, String.class, String.class);
-                    break;
-                case "join":
                     currentMethod = InputInterpreter.class.getDeclaredMethod(function, String.class, String.class, String.class);
                     break;
                 case "mirror":
