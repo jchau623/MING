@@ -7,10 +7,30 @@ import ming.cpsc311.ubc.InputInterpreterInterface;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.FontMetrics;
+import java.awt.GradientPaint;
+import java.awt.Graphics2D;
+import java.awt.geom.Ellipse2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.awt.Graphics;
+import java.awt.geom.Line2D;
+import java.lang.Math;
+
+
+import javax.imageio.ImageIO;
 
 public class InputInterpreter implements InputInterpreterInterface {
     private HashMap<String, Structure> structures = new HashMap<>();
+    private HashMap<String, Structure> visited = new HashMap<>();
+    private float l = 25;
 
     @Override
     public void interpret(ArrayList<String> commands) throws NoSuchMethodException, InvalidFunctionException {
@@ -95,7 +115,7 @@ public class InputInterpreter implements InputInterpreterInterface {
      * @return Structure
      */
     //TODO: Look into hashmap for the corresponding Structure!
-    private Structure join(String s1, String s2, String bond_type_string) throws StructureNotFoundException {
+    private Structure bond(String s1, String s2, String bond_type_string) throws StructureNotFoundException {
         int bond_type = Integer.parseInt(bond_type_string);
         Structure x = this.structures.get(s1);
         Structure y = this.structures.get(s2);
@@ -149,9 +169,40 @@ public class InputInterpreter implements InputInterpreterInterface {
     //TODO: Look into hashmap for the corresponding Structure!
     private void render(String s) throws StructureNotFoundException {
         Structure x = this.structures.get(s);
-        System.out.println("hello bitch");
         if (x == null) throw new StructureNotFoundException("Structure " + s + " does not exist.");
+        //setup canvas
+        try{
+            BufferedImage bi = new BufferedImage(500, 500, BufferedImage.TYPE_INT_ARGB);
+            Graphics2D ig2 = bi.createGraphics();
+            Font font = new Font("TimesRoman", Font.BOLD, 12);
+            ig2.setFont(font);
+            ig2.setPaint(Color.black);
+            renderHelper(x, 250, 250, ig2);
 
+            ImageIO.write(bi, "PNG", new File("poop.PNG"));
+        } catch (IOException e){
+            System.out.println("didnt work dude");
+        }
+
+    }
+
+    private void renderHelper(Structure s, float startx, float starty, Graphics2D ig2){
+        this.visited.put(s.getvName(), s);
+        ig2.drawString(s.geteName(),startx, starty);
+        System.out.println(startx);
+        System.out.println(starty);
+        double ogBond = 360 / s.getBonds().size() * Math.PI / 180;
+        double bondAngle = ogBond;
+        for(Bond bond : s.getBonds()){
+            if(visited.get(bond.getStructure().getvName()) == null){
+                int endx = (int) (startx + this.l * Math.sin(bondAngle));
+                int endy = (int) (starty + this.l * Math.cos(bondAngle));
+                Line2D lin = new Line2D.Float(startx, starty, endx, endy);
+                ig2.draw(lin);
+                renderHelper(bond.getStructure(), endx, endy, ig2);
+            }
+            bondAngle = bondAngle + ogBond;
+        }
     }
 
     private Method obtainMethod(String function) throws NoSuchMethodException {
