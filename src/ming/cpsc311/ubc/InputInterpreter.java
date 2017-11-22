@@ -30,7 +30,7 @@ import javax.imageio.ImageIO;
 public class InputInterpreter implements InputInterpreterInterface {
     private HashMap<String, Structure> structures = new HashMap<>();
     private HashMap<String, Structure> visited = new HashMap<>();
-    private float l = 25;
+    private float l = 60;
 
     @Override
     public void interpret(ArrayList<String> commands) throws NoSuchMethodException, InvalidFunctionException {
@@ -174,7 +174,7 @@ public class InputInterpreter implements InputInterpreterInterface {
         try{
             BufferedImage bi = new BufferedImage(500, 500, BufferedImage.TYPE_INT_ARGB);
             Graphics2D ig2 = bi.createGraphics();
-            Font font = new Font("TimesRoman", Font.BOLD, 12);
+            Font font = new Font("TimesRoman", Font.BOLD, 25);
             ig2.setFont(font);
             ig2.setPaint(Color.black);
             renderHelper(x, 250, 250, ig2);
@@ -189,16 +189,31 @@ public class InputInterpreter implements InputInterpreterInterface {
     private void renderHelper(Structure s, float startx, float starty, Graphics2D ig2){
         this.visited.put(s.getvName(), s);
         ig2.drawString(s.geteName(),startx, starty);
-        System.out.println(startx);
-        System.out.println(starty);
         double ogBond = 360 / s.getBonds().size() * Math.PI / 180;
         double bondAngle = ogBond;
         for(Bond bond : s.getBonds()){
             if(visited.get(bond.getStructure().getvName()) == null){
                 int endx = (int) (startx + this.l * Math.sin(bondAngle));
+                System.out.println(bondAngle);
+                System.out.println(endx);
                 int endy = (int) (starty + this.l * Math.cos(bondAngle));
-                Line2D lin = new Line2D.Float(startx, starty, endx, endy);
-                ig2.draw(lin);
+                int bondType = bond.getBondType();
+                if(bondType == 1){
+                    Line2D lin = new Line2D.Float(startx, starty, endx, endy);
+                    ig2.draw(lin);
+                } else if(bondType == 2){
+                    Line2D lin1 = new Line2D.Float(startx, starty, endx, endy);
+                    Line2D lin2 = new Line2D.Float(startx, starty-5, endx, endy-5);
+                    ig2.draw(lin1);
+                    ig2.draw(lin2);
+                } else if(bondType == 3){
+                    Line2D lin1 = new Line2D.Float(startx, starty, endx, endy);
+                    Line2D lin2 = new Line2D.Float(startx+3, starty, endx+3, endy);
+                    Line2D lin3 = new Line2D.Float(startx+6, starty, endx+6, endy);
+                    ig2.draw(lin1);
+                    ig2.draw(lin2);
+                    ig2.draw(lin3);
+                }
                 renderHelper(bond.getStructure(), endx, endy, ig2);
             }
             bondAngle = bondAngle + ogBond;
