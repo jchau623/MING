@@ -1,0 +1,8 @@
+c1 = make(C)
+c2 = make(O)
+c3 = make(H)
+c4 = make(K)
+triple-bond(c1, c2)
+triple-bond(c1, c3)
+triple-bond(c1, c4)
+render(c1)
