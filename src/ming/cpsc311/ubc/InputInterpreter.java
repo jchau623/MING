@@ -112,8 +112,13 @@ public class InputInterpreter implements InputInterpreterInterface {
      * @return Structure
      */
     //TODO: Look into hashmap for the corresponding Structure!
-    private Structure bond(String s1, String s2, String bond_type_string) throws StructureNotFoundException {
-        int bond_type = Integer.parseInt(bond_type_string);
+    private Structure bond(String s1, String s2, String bond_type_string) throws StructureNotFoundException, NumberFormatException {
+        int bond_type = 0;
+        try {
+            bond_type = Integer.parseInt(bond_type_string);
+        } catch (NumberFormatException e) {
+            throw new NumberFormatException("bond expects a valid number");
+        }
         Structure x = this.structures.get(s1);
         Structure y = this.structures.get(s2);
         if (x == null) throw new StructureNotFoundException("Structure " + s1 + " does not exist.");
