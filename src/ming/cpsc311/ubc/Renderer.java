@@ -17,12 +17,14 @@ public class Renderer implements RendererInterface {
         try{
             BufferedImage bi = new BufferedImage(500, 500, BufferedImage.TYPE_INT_ARGB);
             Graphics2D ig2 = bi.createGraphics();
+            ig2.setColor(Color.WHITE);
+            ig2.fillRect(0,0,500,500);
             Font font = new Font("TimesRoman", Font.BOLD, 25);
             ig2.setFont(font);
             ig2.setPaint(Color.black);
             renderHelper(s, 250, 250, ig2);
 
-            ImageIO.write(bi, "PNG", new File("poop.PNG"));
+            ImageIO.write(bi, "PNG", new File("generated-image.PNG"));
         } catch (IOException e){
             System.out.println("didnt work dude");
         }
