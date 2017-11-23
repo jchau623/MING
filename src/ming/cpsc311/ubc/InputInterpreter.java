@@ -112,10 +112,11 @@ public class InputInterpreter implements InputInterpreterInterface {
      * @return Structure
      */
     //TODO: Look into hashmap for the corresponding Structure!
-    private Structure bond(String s1, String s2, String bond_type_string) throws StructureNotFoundException, NumberFormatException {
+    private Structure bond(String s1, String s2, String bond_type_string) throws StructureNotFoundException, NumberFormatException, IllegalArgumentException {
         int bond_type = 0;
         try {
             bond_type = Integer.parseInt(bond_type_string);
+            if (bond_type < 1 || bond_type > 5) throw new IllegalArgumentException("bond_type must be between 1 and 5");
         } catch (NumberFormatException e) {
             throw new NumberFormatException("bond expects a valid number");
         }
