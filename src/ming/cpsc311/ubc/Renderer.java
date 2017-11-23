@@ -45,13 +45,13 @@ public class Renderer implements RendererInterface {
                     ig2.draw(lin);
                 } else if(bondType == 2){
                     Line2D lin1 = new Line2D.Float(startx, starty, endx, endy);
-                    Line2D lin2 = new Line2D.Float(startx, starty-5, endx, endy-5);
+                    Line2D lin2 = new Line2D.Float(startx+3, starty+3, endx+3, endy+3);
                     ig2.draw(lin1);
                     ig2.draw(lin2);
                 } else if(bondType == 3){
                     Line2D lin1 = new Line2D.Float(startx, starty, endx, endy);
-                    Line2D lin2 = new Line2D.Float(startx+3, starty, endx+3, endy);
-                    Line2D lin3 = new Line2D.Float(startx+6, starty, endx+6, endy);
+                    Line2D lin2 = new Line2D.Float(startx+3, starty+3, endx+3, endy+3);
+                    Line2D lin3 = new Line2D.Float(startx-3, starty-3, endx-3, endy-3);
                     ig2.draw(lin1);
                     ig2.draw(lin2);
                     ig2.draw(lin3);
