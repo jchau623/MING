@@ -44,14 +44,26 @@ public class Renderer implements RendererInterface {
                     Line2D lin = new Line2D.Float(startx, starty, endx, endy);
                     ig2.draw(lin);
                 } else if(bondType == 2){
+                    int offset = 3;
+                    if(s.getBonds().size() == 3){
+                        if(bondAngle > 4 && bondAngle < 5){
+                            offset = offset + 5;
+                        }
+                    }
                     Line2D lin1 = new Line2D.Float(startx, starty, endx, endy);
-                    Line2D lin2 = new Line2D.Float(startx+3, starty+3, endx+3, endy+3);
+                    Line2D lin2 = new Line2D.Float(startx+offset, starty+offset, endx+offset, endy+offset);
                     ig2.draw(lin1);
                     ig2.draw(lin2);
                 } else if(bondType == 3){
+                    int offset = 3;
+                    if(s.getBonds().size() == 3){
+                        if(bondAngle > 4 && bondAngle < 5){
+                            offset = offset + 7;
+                        }
+                    }
                     Line2D lin1 = new Line2D.Float(startx, starty, endx, endy);
-                    Line2D lin2 = new Line2D.Float(startx+3, starty+3, endx+3, endy+3);
-                    Line2D lin3 = new Line2D.Float(startx-3, starty-3, endx-3, endy-3);
+                    Line2D lin2 = new Line2D.Float(startx+offset, starty+offset, endx+offset, endy+offset);
+                    Line2D lin3 = new Line2D.Float(startx-offset, starty-offset, endx-offset, endy-offset);
                     ig2.draw(lin1);
                     ig2.draw(lin2);
                     ig2.draw(lin3);
